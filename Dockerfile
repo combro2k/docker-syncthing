@@ -21,7 +21,7 @@ VOLUME ["/data", "/config"]
 
 WORKDIR /opt/syncthing
 
-EXPOSE 8080
+EXPOSE 8080 22000/tcp 22000/udp
 
 ADD start.sh /opt/syncthing/start.sh
 
