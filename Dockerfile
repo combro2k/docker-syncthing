@@ -19,7 +19,7 @@ RUN mkdir -p /config /data && chown -R syncthing:syncthing /data /config
 
 RUN sudo -H -u syncthing /opt/syncthing/syncthing -generate=/config
 
-RUN sed -i 's#/config/syncthing/Sync#/data/Sync#g' /config/config.xml
+RUN sed -i 's#/config/syncthing/Sync#/data#g' /config/config.xml
 
 VOLUME ["/data", "/config"]
 
