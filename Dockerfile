@@ -4,7 +4,7 @@ MAINTAINER Martijn van Maurik <docker@vmaurik.nl>
 ENV VERSION 0.10.20
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN useradd syncthing -b /home/syncthing
+RUN useradd syncthing -b /config
 
 RUN apt-get update
 RUN apt-get dist-upgrade -yq
@@ -15,11 +15,13 @@ RUN cd /opt/syncthing && \
     curl -k -L https://github.com/syncthing/syncthing/releases/download/v0.10.20/syncthing-linux-amd64-v${VERSION}.tar.gz | \
     tar zxv --strip-components=1
 
-RUN mkdir -p /data/{config,data}
+RUN mkdir -p /config /data && chown -R syncthing:syncthing /data /config
 
-RUN sudo -H -u syncthing -generate=/data/config
+RUN sudo -H -u syncthing /opt/syncthing/syncthing -generate=/config
 
-VOLUME ["/data"]
+RUN sed -i 's#/config/syncthing/Sync#/data/Sync#g' /config/config.xml
+
+VOLUME ["/data", "/config"]
 
 WORKDIR /opt/syncthing
 
@@ -31,4 +33,4 @@ RUN chmod +x /opt/syncthing/start.sh
 
 RUN chown -R syncthing:syncthing /opt/syncthing
 
-CMD ["/bin/bash"]
+CMD ["/opt/syncthing/start.sh"]

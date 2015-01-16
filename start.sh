@@ -15,4 +15,4 @@ fi
 
 chown syncthing:syncthing /data -R
 
-sudo -H -u syncthing /opt/syncthing/syncthing -gui-address=0.0.0.0:8080 -home /data/config
+sudo -H -u syncthing /opt/syncthing/syncthing -gui-address=0.0.0.0:8080 -home /config
