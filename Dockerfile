@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER Martijn van Maurik <docker@vmaurik.nl>
 
-ENV VERSION 0.10.20
+ENV VERSION 0.10.21
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN useradd syncthing -b /config
