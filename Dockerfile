@@ -12,7 +12,7 @@ RUN apt-get install tar curl ca-certificates -yq
 
 RUN mkdir -p /opt/syncthing
 RUN cd /opt/syncthing && \
-    curl -k -L https://github.com/syncthing/syncthing/releases/download/v0.10.20/syncthing-linux-amd64-v${VERSION}.tar.gz | \
+    curl -k -L https://github.com/syncthing/syncthing/releases/download/v${VERSION}/syncthing-linux-amd64-v${VERSION}.tar.gz | \
     tar zxv --strip-components=1
 
 RUN mkdir -p /config /data && chown -R syncthing:syncthing /data /config
