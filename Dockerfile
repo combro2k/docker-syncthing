@@ -8,7 +8,7 @@ RUN useradd syncthing -b /config
 
 RUN apt-get update
 RUN apt-get dist-upgrade -yq
-RUN apt-get install tar curl ca-certificates -yq
+RUN apt-get install tar curl ca-certificates sudo -yq
 
 RUN mkdir -p /opt/syncthing
 RUN cd /opt/syncthing && \
