@@ -1,7 +1,7 @@
 FROM ubuntu-debootstrap:14.04
 MAINTAINER Martijn van Maurik <docker@vmaurik.nl>
 
-ENV VERSION 0.10.21
+ENV VERSION 0.10.22
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN useradd syncthing -b /config
