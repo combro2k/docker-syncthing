@@ -1,32 +1,22 @@
-FROM ubuntu-debootstrap:14.04
+FROM combro2k/debian-debootstrap:8
 MAINTAINER Martijn van Maurik <docker@vmaurik.nl>
 
-ENV VERSION 0.11.11
-ENV DEBIAN_FRONTEND noninteractive
+ENV VERSION 0.11.21
 
-RUN useradd syncthing -b /config
+ADD start.sh /usr/local/bin/run
 
-RUN apt-get update
-RUN apt-get dist-upgrade -yq
-RUN apt-get install tar curl ca-certificates sudo -yq
-
-RUN mkdir -p /opt/syncthing
-RUN cd /opt/syncthing && \
-    curl -k -L https://github.com/syncthing/syncthing/releases/download/v${VERSION}/syncthing-linux-amd64-v${VERSION}.tar.gz | \
-    tar zxv --strip-components=1
-
-RUN mkdir -p /config /data && chown -R syncthing:syncthing /data /config
-
-VOLUME ["/data", "/config"]
+RUN useradd syncthing -b /config && \
+    export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && apt-get install tar curl ca-certificates sudo -yq && \
+    mkdir -p /opt/syncthing && cd /opt/syncthing && \
+    curl -k -L https://github.com/syncthing/syncthing/releases/download/v${VERSION}/syncthing-linux-amd64-v${VERSION}.tar.gz | tar zxv --strip-components=1 && \
+    mkdir -p /config /data && chown -R syncthing:syncthing /data /config && \
+    chmod +x /usr/local/bin/run && chown -R syncthing:syncthing /opt/syncthing
 
 WORKDIR /opt/syncthing
 
 EXPOSE 8080 22000/tcp 22000/udp
 
-ADD start.sh /opt/syncthing/start.sh
+VOLUME ["/data", "/config"]
 
-RUN chmod +x /opt/syncthing/start.sh
-
-RUN chown -R syncthing:syncthing /opt/syncthing
-
-CMD ["/opt/syncthing/start.sh"]
+CMD ["/usr/local/bin/run"]
