@@ -1,7 +1,7 @@
 FROM combro2k/debian-debootstrap:8
 MAINTAINER Martijn van Maurik <docker@vmaurik.nl>
 
-ENV VERSION 0.14.24
+ENV VERSION 0.14.25
 
 ADD start.sh /usr/local/bin/run
 
